@@ -1,2 +1,2 @@
 # Bit Rush Unlimited
-2D Platformer
+> 2D Mobile Platformer made in Unity
