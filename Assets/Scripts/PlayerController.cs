@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -76,8 +77,8 @@ namespace bitrush {
 
         void CheckHorizontalCollisions(ref Vector2 velocity) {
             if(velocity.x == 0) return;
-            Vector2 dirX = Mathf.Sign(velocity.x) * Vector2.right;
-            Vector2 origin = velocity.x < 0 ? _raycastOrigins.Left : _raycastOrigins.Right;
+            Vector2 dirX = Math.Sign(velocity.x) * Vector2.right;
+            Vector2 origin = velocity.x > 0 ? _raycastOrigins.Right : _raycastOrigins.Left;
             float distance = _skinWidth + Mathf.Abs(velocity.x);
             for (int i = 0; i < _horizontalRayCount; i++) {
                 RaycastHit2D hit = Physics2D.Raycast(new Vector2(origin.x, origin.y + i * _hRaySpacing), dirX, distance, _collisionMask);
@@ -90,17 +91,17 @@ namespace bitrush {
         }
 
         void CheckVerticalCollisions(ref Vector2 velocity) {
-            if(velocity.y == 0) return;
-            Vector2 dirY = Mathf.Sign(velocity.y) * Vector2.up;
-            Vector2 origin = velocity.y < 0 ? _raycastOrigins.Left : _raycastOrigins.Top;
+            int dirY = Math.Sign(velocity.y);
+            Vector2 direction = dirY == 0 ? Vector2.down : dirY * Vector2.up;
+            Vector2 origin = velocity.y > 0 ? _raycastOrigins.Top : _raycastOrigins.Left;
             float distance = _skinWidth + Mathf.Abs(velocity.y);
             for (int i = 0; i < _verticalRayCount; i++) {
-                RaycastHit2D hit = Physics2D.Raycast(new Vector2(origin.x + i * _vRaySpacing + velocity.x, origin.y), dirY, distance, _collisionMask);
-                //Debug.DrawRay(new Vector2(origin.x + i * _vRaySpacing + velocity.x, origin.y), dirY * distance, Color.red); //Only for debugging
+                RaycastHit2D hit = Physics2D.Raycast(new Vector2(origin.x + i * _vRaySpacing + velocity.x, origin.y), direction, distance, _collisionMask);
+                //Debug.DrawRay(new Vector2(origin.x + i * _vRaySpacing + velocity.x, origin.y), direction * distance, Color.red); //Only for debugging
                 if (hit) {
-                    velocity.y = dirY.y < 0 ? _skinWidth - hit.distance : hit.distance - _skinWidth;
+                    velocity.y = dirY <= 0 ? _skinWidth - hit.distance : hit.distance - _skinWidth;
                     distance = hit.distance;
-                    _isGrounded = dirY.y < 0;
+                    _isGrounded = dirY <= 0;
                 }
             }
         }
