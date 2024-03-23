@@ -4,21 +4,27 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 namespace bitrush {
+    [RequireComponent(typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour {
+
+        private struct RaycastOrigins {
+            public Vector2 Top, Left, Right;
+        }
+
+        [SerializeField] private BoxCollider2D _collider;
+        [SerializeField] private LayerMask _collisionMask;
         [SerializeField] private float _moveSpeed = 5f;
         [SerializeField] private float _jumpHeight = 3f;
         [SerializeField] private float _jumpTime = 0.4f;
-        [SerializeField] private LayerMask _collisionMask;
-        private struct RaycastOrigins {
-            public Vector2 Bottom, Left;
-        }
+        [SerializeField][Range(2,32)] private int _horizontalRayCount = 8;
+        [SerializeField][Range(2,32)] private int _verticalRayCount = 8;
 
+        private readonly float _skinWidth = 0.015f;
         private float _gravity;
-        private Vector2 _velocity;
-        private bool _isGrounded;
         private float _jumpForce;
-        private const float HWidth = 0.475f, HHeight = 0.975f; //half width and half height
-        private const float HRaySpacing = (2f*HHeight)/7, VRaySpacing = (2f*HWidth)/7; //8 raycasts for each side, 1.9 to leave buffer
+        private float _hRaySpacing, _vRaySpacing;
+        private bool _isGrounded;
+        private Vector2 _velocity;
         private RaycastOrigins _raycastOrigins;
 
         void Start() {
@@ -26,29 +32,24 @@ namespace bitrush {
             _jumpForce = Mathf.Abs(_gravity) * _jumpTime; //v = gt
         }
 
-
         void Update() {
             UpdateRaycastOrigins();
             AddGravity();
             CheckInput();
             Move(_velocity * Time.deltaTime);
-
-            if (transform.position.y < -10f) {
-                transform.position = new Vector3(0, 0, 0);
-                _velocity = Vector2.zero;
-            }
         }
 
         void UpdateRaycastOrigins() {
-            Vector2 position = transform.position;
-            _raycastOrigins.Bottom = new Vector2(position.x, position.y - HHeight);
-            _raycastOrigins.Left = new Vector2(position.x - HWidth, position.y);
+            Bounds bounds = _collider.bounds;
+            Vector2 size = _collider.size;
+            _raycastOrigins.Left = new Vector2(bounds.min.x + _skinWidth, bounds.min.y + _skinWidth);
+            _raycastOrigins.Right = new Vector2(bounds.max.x - _skinWidth, bounds.min.y + _skinWidth);
+            _raycastOrigins.Top = new Vector2(bounds.min.x + _skinWidth, bounds.max.y - _skinWidth);
+            _hRaySpacing = (size.y - 2*_skinWidth) / (_horizontalRayCount - 1);
+            _vRaySpacing = (size.x - 2*_skinWidth) / (_verticalRayCount - 1);
         }
 
         void AddGravity() {
-            Vector2 minX = _raycastOrigins.Bottom - new Vector2(0.35f, 0);
-            Vector2 maxX = _raycastOrigins.Bottom + new Vector2(0.35f, 0);
-            _isGrounded = Physics2D.OverlapCircle(minX, 0.05f, _collisionMask) || Physics2D.OverlapCircle(maxX, 0.05f, _collisionMask);
             if (_isGrounded) {
                 _velocity.y = 0;
             } else {
@@ -57,20 +58,15 @@ namespace bitrush {
         }
 
         void CheckInput() {
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-                _velocity.x = -_moveSpeed;
-            } else if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
-                _velocity.x = _moveSpeed;
-            } else {
-                _velocity.x = 0;
-            }
-
+            //TODO: Improve input handling with buffering, animation, smoothness, etc.
+            _velocity.x = Input.GetAxisRaw("Horizontal") * _moveSpeed;
             if (Input.GetKeyDown(KeyCode.Space) && _isGrounded) {
                 _velocity.y = _jumpForce;
             }
         }
 
         void Move(Vector2 velocity) {
+            _isGrounded = false;
             CheckHorizontalCollisions(ref velocity);
             CheckVerticalCollisions(ref velocity);
             transform.Translate(velocity);
@@ -78,28 +74,31 @@ namespace bitrush {
 
         void CheckHorizontalCollisions(ref Vector2 velocity) {
             if(velocity.x == 0) return;
-            float dirX = Mathf.Sign(velocity.x);
-            for (int i = 0; i < 8; i++) {
-                RaycastHit2D hit = Physics2D.Raycast(_raycastOrigins.Bottom + Vector2.up * (i * HRaySpacing), Vector2.right * dirX,
-                    HWidth + velocity.x, _collisionMask);
-                Debug.DrawRay(_raycastOrigins.Bottom + Vector2.up * (i * HRaySpacing), Vector2.right * (dirX * (HWidth + velocity.x)), Color.red);
+            Vector2 dirX = Mathf.Sign(velocity.x) * Vector2.right;
+            Vector2 origin = velocity.x < 0 ? _raycastOrigins.Left : _raycastOrigins.Right;
+            float distance = _skinWidth + Mathf.Abs(velocity.x);
+            for (int i = 0; i < _horizontalRayCount; i++) {
+                RaycastHit2D hit = Physics2D.Raycast(new Vector2(origin.x, origin.y + i * _hRaySpacing), dirX, distance, _collisionMask);
+                //Debug.DrawRay(new Vector2(origin.x, origin.y + i * _hRaySpacing), dirX * distance, Color.red); //Only for debugging
                 if (hit) {
-                    velocity.x = (hit.distance - HWidth) * dirX;
-                    break;
+                    velocity.x = dirX.x < 0 ? _skinWidth - hit.distance : hit.distance - _skinWidth;
+                    distance = hit.distance;
                 }
             }
         }
 
         void CheckVerticalCollisions(ref Vector2 velocity) {
             if(velocity.y == 0) return;
-            float dirY = Mathf.Sign(velocity.y);
-            for (int i = 0; i < 8; i++) {
-                RaycastHit2D hit = Physics2D.Raycast(_raycastOrigins.Left + Vector2.right * (i * VRaySpacing), Vector2.up * dirY,
-                    HHeight + velocity.y, _collisionMask);
-                Debug.DrawRay(_raycastOrigins.Left + Vector2.right * (i * VRaySpacing), (Vector2.up) * (dirY * (HHeight + velocity.y)), Color.red);
+            Vector2 dirY = Mathf.Sign(velocity.y) * Vector2.up;
+            Vector2 origin = velocity.y < 0 ? _raycastOrigins.Left : _raycastOrigins.Top;
+            float distance = _skinWidth + Mathf.Abs(velocity.y);
+            for (int i = 0; i < _verticalRayCount; i++) {
+                RaycastHit2D hit = Physics2D.Raycast(new Vector2(origin.x + i * _vRaySpacing + velocity.x, origin.y), dirY, distance, _collisionMask);
+                //Debug.DrawRay(new Vector2(origin.x + i * _vRaySpacing + velocity.x, origin.y), dirY * distance, Color.red); //Only for debugging
                 if (hit) {
-                    velocity.y = (hit.distance - HHeight) * dirY;
-                    break;
+                    velocity.y = dirY.y < 0 ? _skinWidth - hit.distance : hit.distance - _skinWidth;
+                    distance = hit.distance;
+                    _isGrounded = dirY.y < 0;
                 }
             }
         }
