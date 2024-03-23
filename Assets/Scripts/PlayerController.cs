@@ -11,13 +11,15 @@ namespace bitrush {
             public Vector2 Top, Left, Right;
         }
 
+        [Header("Collisions")]
+        [SerializeField][Range(2,32)] private int _horizontalRayCount = 8;
+        [SerializeField][Range(2,32)] private int _verticalRayCount = 8;
         [SerializeField] private BoxCollider2D _collider;
         [SerializeField] private LayerMask _collisionMask;
+        [Header("Player Variables")]
         [SerializeField] private float _moveSpeed = 5f;
         [SerializeField] private float _jumpHeight = 3f;
         [SerializeField] private float _jumpTime = 0.4f;
-        [SerializeField][Range(2,32)] private int _horizontalRayCount = 8;
-        [SerializeField][Range(2,32)] private int _verticalRayCount = 8;
 
         private readonly float _skinWidth = 0.015f;
         private float _gravity;
