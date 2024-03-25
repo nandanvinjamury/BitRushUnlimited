@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace bitrush {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class PlayerController : MonoBehaviour {
-
+    public class CharacterController2D : MonoBehaviour {
         private struct RaycastOrigins {
             public Vector2 Top, Left, Right;
         }
