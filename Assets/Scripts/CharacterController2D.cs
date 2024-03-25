@@ -13,32 +13,22 @@ namespace bitrush {
         [SerializeField][Range(2,32)] private int _verticalRayCount = 8;
         [SerializeField] private BoxCollider2D _collider;
         [SerializeField] private LayerMask _collisionMask;
-        [Header("Player Variables")]
-        [SerializeField] private float _moveSpeed = 5f;
-        [SerializeField] private float _jumpHeight = 3f;
-        [SerializeField] private float _jumpTime = 0.4f;
 
+        protected float _gravity;
+        protected Vector2 _velocity;
+        protected bool _isGrounded;
         private readonly float _skinWidth = 0.015f;
-        private float _gravity;
-        private float _jumpForce;
         private float _hRaySpacing, _vRaySpacing;
-        private bool _isGrounded;
-        private Vector2 _velocity;
         private RaycastOrigins _raycastOrigins;
-
-        void Start() {
-            _gravity = -(_jumpHeight * 2) / Mathf.Pow(_jumpTime, 2); //0.5gt^2 = h -> g = 2h/t^2
-            _jumpForce = Mathf.Abs(_gravity) * _jumpTime; //v = gt
-        }
 
         void Update() {
             UpdateRaycastOrigins();
             AddGravity();
-            CheckInput();
+            CalculateVelocity();
             Move(_velocity * Time.deltaTime);
         }
 
-        void UpdateRaycastOrigins() {
+        protected void UpdateRaycastOrigins() {
             Bounds bounds = _collider.bounds;
             Vector2 size = _collider.size;
             _raycastOrigins.Left = new Vector2(bounds.min.x + _skinWidth, bounds.min.y + _skinWidth);
@@ -48,7 +38,7 @@ namespace bitrush {
             _vRaySpacing = (size.x - 2*_skinWidth) / (_verticalRayCount - 1);
         }
 
-        void AddGravity() {
+        protected void AddGravity() {
             if (_isGrounded) {
                 _velocity.y = 0;
             } else {
@@ -56,22 +46,16 @@ namespace bitrush {
             }
         }
 
-        void CheckInput() {
-            //TODO: Improve input handling with buffering, animation, smoothness, etc.
-            _velocity.x = Input.GetAxisRaw("Horizontal") * _moveSpeed;
-            if (Input.GetKeyDown(KeyCode.Space) && _isGrounded) {
-                _velocity.y = _jumpForce;
-            }
-        }
+        protected virtual void CalculateVelocity() {}
 
-        void Move(Vector2 velocity) {
+        protected void Move(Vector2 velocity) {
             _isGrounded = false;
             CheckHorizontalCollisions(ref velocity);
             CheckVerticalCollisions(ref velocity);
             transform.Translate(velocity);
         }
 
-        void CheckHorizontalCollisions(ref Vector2 velocity) {
+        private void CheckHorizontalCollisions(ref Vector2 velocity) {
             if(velocity.x == 0) return;
             Vector2 dirX = Math.Sign(velocity.x) * Vector2.right;
             Vector2 origin = velocity.x > 0 ? _raycastOrigins.Right : _raycastOrigins.Left;
@@ -86,7 +70,7 @@ namespace bitrush {
             }
         }
 
-        void CheckVerticalCollisions(ref Vector2 velocity) {
+        private void CheckVerticalCollisions(ref Vector2 velocity) {
             int dirY = Math.Sign(velocity.y);
             Vector2 direction = dirY == 0 ? Vector2.down : dirY * Vector2.up;
             Vector2 origin = velocity.y > 0 ? _raycastOrigins.Top : _raycastOrigins.Left;
