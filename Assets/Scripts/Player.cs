@@ -4,28 +4,42 @@ namespace bitrush {
     public class Player : CharacterController2D {
 
         [Header("Player Variables")]
-        [SerializeField] private float _moveSpeed = 5f;
-        [SerializeField] private float _jumpHeight = 3f;
-        [SerializeField] private float _jumpTime = 0.4f;
+        [SerializeField] private float _moveSpeed = 10f;
+        [Space]
+        [SerializeField] private float _jumpHeight = 3.5f;
+        [SerializeField] private float _jumpTime = 0.35f;
+        [SerializeField] private float _jumpBufferTime = 0.1f;
+        [SerializeField] private float _coyoteTime = 0.1f;
 
         private float _jumpForce;
+        private float _jumpBufferTimer;
+        private float _coyoteTimer;
 
         void Start() {
-            _gravity = -(_jumpHeight * 2) / Mathf.Pow(_jumpTime, 2); //0.5gt^2 = h -> g = 2h/t^2
+            Application.targetFrameRate = 30;
+            _gravity = -(_jumpHeight * 2) / (_jumpTime*_jumpTime); // (gt^2)/2 = h   ->   g = 2h/t^2
             _jumpForce = Mathf.Abs(_gravity) * _jumpTime; //v = gt
-        }
-        void Update() {
-            UpdateRaycastOrigins();
-            AddGravity();
-            CalculateVelocity();
-            Move(_velocity * Time.deltaTime);
         }
 
         protected override void CalculateVelocity() {
-            base.CalculateVelocity();
-            //TODO: Improve input handling with buffering, animation, smoothness, etc.
             _velocity.x = Input.GetAxisRaw("Horizontal") * _moveSpeed;
-            if (Input.GetKeyDown(KeyCode.Space) && _isGrounded) {
+            JumpInput();
+        }
+
+        void JumpInput() {
+            if (!_isGrounded) {
+                _coyoteTimer += Time.deltaTime;
+            } else {
+                _coyoteTimer = 0;
+            }
+
+            if (!Input.GetKey(KeyCode.Space)) return;
+            _jumpBufferTimer += Time.deltaTime;
+
+            if (_isGrounded && _jumpBufferTime >= _jumpBufferTimer) {
+                _jumpBufferTimer = 0;
+                _velocity.y = _jumpForce;
+            } else if(_coyoteTime >= _coyoteTimer) {
                 _velocity.y = _jumpForce;
             }
         }

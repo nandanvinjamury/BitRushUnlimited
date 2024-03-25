@@ -282,7 +282,7 @@ MonoBehaviour:
     m_Bits: 64
   _moveSpeed: 10
   _jumpHeight: 3.5
-  _jumpTime: 0.3
+  _jumpTime: 0.35
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
