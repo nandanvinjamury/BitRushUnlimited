@@ -279,7 +279,7 @@ MonoBehaviour:
   _collider: {fileID: 212713973}
   _collisionMask:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 960
   _minSpeed: 5
   _maxSpeed: 20
   _accelerationTime: 1
@@ -667,7 +667,7 @@ GameObject:
   m_Component:
   - component: {fileID: 705633570}
   - component: {fileID: 705633571}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Isometric Diamond (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1502,7 +1502,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1382016146}
   - component: {fileID: 1382016147}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Isometric Diamond (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1586,7 +1586,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1415099670}
   - component: {fileID: 1415099671}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Isometric Diamond
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2121,7 +2121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1869206495}
   - component: {fileID: 1869206496}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Isometric Diamond (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2465,7 +2465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1963883364}
   - component: {fileID: 1963883365}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Spikes
   m_TagString: Spikes
   m_Icon: {fileID: 0}
