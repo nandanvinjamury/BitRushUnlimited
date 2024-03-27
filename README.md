@@ -23,4 +23,4 @@ What sets it apart from titles like Geometry Dash? Instead of endless scrolling,
 4. Endless Mode (Procedural Generation)
 5. Leaderboards/Leagues (Points for each level completion, scaled down with number of attempts)
 
-NOTE: ALL added features will make sure that Free-To-Play is viable, and never compromise the integrity of the gameplay.
+**[NOTE: ALL added features will make sure that Free-To-Play is viable, and never compromise the integrity of the gameplay]**
