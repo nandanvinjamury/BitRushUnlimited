@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 212713973}
   - component: {fileID: 212713974}
   - component: {fileID: 212713975}
-  m_Layer: 8
+  m_Layer: 31
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -280,11 +280,11 @@ MonoBehaviour:
   _collider: {fileID: 212713973}
   _collisionMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 448
   _minSpeed: 5
   _maxSpeed: 20
   _accelerationTime: 1
-  _jumpHeight: 3.5
+  _jumpHeight: 5
   _jumpTime: 0.35
   _jumpBufferTime: 0.1
   _coyoteTime: 0.1
@@ -436,8 +436,9 @@ GameObject:
   - component: {fileID: 564665949}
   - component: {fileID: 564665951}
   - component: {fileID: 564665950}
+  - component: {fileID: 564665952}
   m_Layer: 6
-  m_Name: Platform (3)
+  m_Name: MPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -545,7 +546,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.87058824, g: 0.5686275, b: 0.31764707, a: 1}
+  m_Color: {r: 0.8233089, g: 0.87058824, b: 0.31764704, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -555,6 +556,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &564665952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564665948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da895b46269346109ce7a36756821b23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 564665951}
+  _fallSpeed: 20
+  _fallDelay: 250
+  _fallRespawn: 2
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,7 +794,7 @@ GameObject:
   m_Component:
   - component: {fileID: 788601178}
   - component: {fileID: 788601179}
-  m_Layer: 8
+  m_Layer: 31
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -862,8 +879,9 @@ GameObject:
   - component: {fileID: 860416124}
   - component: {fileID: 860416126}
   - component: {fileID: 860416125}
-  m_Layer: 6
-  m_Name: Platform (8)
+  - component: {fileID: 860416127}
+  m_Layer: 7
+  m_Name: FPlatform1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -969,9 +987,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.87058824, g: 0.5686275, b: 0.31764707, a: 1}
+  m_Color: {r: 0.31764704, g: 0.843808, b: 0.87058824, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -981,6 +999,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &860416127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860416123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da895b46269346109ce7a36756821b23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 860416126}
+  _fallSpeed: 20
+  _fallDelay: 250
+  _fallRespawn: 2
 --- !u!1 &923157359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,8 +1416,9 @@ GameObject:
   - component: {fileID: 1658666619}
   - component: {fileID: 1658666621}
   - component: {fileID: 1658666620}
-  m_Layer: 6
-  m_Name: Platform (9)
+  - component: {fileID: 1658666622}
+  m_Layer: 7
+  m_Name: FPlatform2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1489,9 +1524,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.87058824, g: 0.5686275, b: 0.31764707, a: 1}
+  m_Color: {r: 0.31764704, g: 0.843808, b: 0.87058824, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1501,6 +1536,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1658666622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658666618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da895b46269346109ce7a36756821b23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 1658666621}
+  _fallSpeed: 20
+  _fallDelay: 250
+  _fallRespawn: 2
 --- !u!1 &1764072575
 GameObject:
   m_ObjectHideFlags: 0
