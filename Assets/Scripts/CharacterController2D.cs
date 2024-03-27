@@ -48,14 +48,14 @@ namespace bitrush {
 
         protected virtual void CalculateVelocity() {}
 
-        protected void Move(Vector2 velocity) {
+        protected virtual void Move(Vector2 velocity) {
             _isGrounded = false;
             CheckHorizontalCollisions(ref velocity);
             CheckVerticalCollisions(ref velocity);
             transform.Translate(velocity);
         }
 
-        private void CheckHorizontalCollisions(ref Vector2 velocity) {
+        protected virtual void CheckHorizontalCollisions(ref Vector2 velocity) {
             if(velocity.x == 0) return;
             Vector2 dirX = Math.Sign(velocity.x) * Vector2.right;
             Vector2 origin = velocity.x > 0 ? _raycastOrigins.Right : _raycastOrigins.Left;
@@ -70,7 +70,8 @@ namespace bitrush {
             }
         }
 
-        private void CheckVerticalCollisions(ref Vector2 velocity) {
+        protected virtual RaycastHit2D CheckVerticalCollisions(ref Vector2 velocity) {
+            RaycastHit2D finalHit = new RaycastHit2D();
             int dirY = Math.Sign(velocity.y);
             Vector2 direction = dirY == 0 ? Vector2.down : dirY * Vector2.up;
             Vector2 origin = velocity.y > 0 ? _raycastOrigins.Top : _raycastOrigins.Left;
@@ -82,8 +83,16 @@ namespace bitrush {
                     velocity.y = dirY <= 0 ? _skinWidth - hit.distance : hit.distance - _skinWidth;
                     distance = hit.distance;
                     _isGrounded = dirY <= 0;
+
+                    if(hit.transform.tag.Equals("MovingPlatform")) {
+                        transform.SetParent(hit.transform, true);
+                    } else {
+                        transform.SetParent(null, true);
+                    }
+                    finalHit = hit;
                 }
             }
+            return finalHit;
         }
     }
 }
