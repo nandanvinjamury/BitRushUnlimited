@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MovingPlatform
   - Spikes
+  - Water
   layers:
   - Default
   - TransparentFX
