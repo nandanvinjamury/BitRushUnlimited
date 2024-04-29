@@ -1,98 +1,113 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace bitrush {
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class CharacterController2D : MonoBehaviour {
-        private struct RaycastOrigins {
-            public Vector2 Top, Left, Right;
+        [Header("Player Variables")]
+        [SerializeField] private float _movementSpeed = 5f;
+        [Space]
+        [SerializeField] private float _jumpHeight = 3.5f;
+        [SerializeField] private float _jumpTime = 0.35f;
+        [SerializeField] private float _jumpBufferTime = 0.1f;
+        [SerializeField] private float _coyoteTime = 0.1f;
+
+        [Header("Player References")]
+        [SerializeField] private Rigidbody2D _rb;
+        [SerializeField] private CapsuleCollider2D _collider;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private Transform _groundCheck;
+        [SerializeField] private LayerMask _groundLayer;
+
+        private Vector2 _velocity;
+        private float _jumpForce;
+        private float _jumpBufferTimer;
+        private float _coyoteTimer;
+        private bool _bufferedJump;
+        private bool _isGrounded;
+
+        void Start() {
+            Application.targetFrameRate = 60;
+            Physics2D.gravity = new Vector2(0,-(2 * _jumpHeight) / Mathf.Pow(_jumpTime, 2));
+            _jumpForce = Mathf.Abs(Physics2D.gravity.y) * _jumpTime;
         }
-
-        [Header("Collisions")]
-        [SerializeField][Range(2,32)] private int _horizontalRayCount = 8;
-        [SerializeField][Range(2,32)] private int _verticalRayCount = 8;
-        [SerializeField] private BoxCollider2D _collider;
-        [SerializeField] private LayerMask _collisionMask;
-
-        protected float _gravity;
-        protected Vector2 _velocity;
-        protected bool _isGrounded;
-        private readonly float _skinWidth = 0.015f;
-        private float _hRaySpacing, _vRaySpacing;
-        private RaycastOrigins _raycastOrigins;
 
         void Update() {
-            UpdateRaycastOrigins();
             AddGravity();
-            CalculateVelocity();
-            Move(_velocity * Time.deltaTime);
+            MovementInput();
+            JumpInput();
+            _isGrounded = Physics2D.OverlapCircle(_groundCheck.position, 0.05f, _groundLayer);
+            _rb.velocity = new Vector2(_velocity.x, _rb.velocity.y);
         }
 
-        protected void UpdateRaycastOrigins() {
-            Bounds bounds = _collider.bounds;
-            Vector2 size = _collider.size;
-            _raycastOrigins.Left = new Vector2(bounds.min.x + _skinWidth, bounds.min.y + _skinWidth);
-            _raycastOrigins.Right = new Vector2(bounds.max.x - _skinWidth, bounds.min.y + _skinWidth);
-            _raycastOrigins.Top = new Vector2(bounds.min.x + _skinWidth, bounds.max.y - _skinWidth);
-            _hRaySpacing = (size.y - 2*_skinWidth) / (_horizontalRayCount - 1);
-            _vRaySpacing = (size.x - 2*_skinWidth) / (_verticalRayCount - 1);
+        void MovementInput() {
+            _velocity.x = Input.GetAxisRaw("Horizontal") * _movementSpeed;
+
+            if (_velocity.x < 0) {
+                _spriteRenderer.flipX = true;
+            } else if(_velocity.x > 0) {
+                _spriteRenderer.flipX = false;
+            }
         }
 
-        protected void AddGravity() {
+        void JumpInput() {
             if (_isGrounded) {
-                _velocity.y = 0;
+                //If the player is grounded or buffered a jump previously, they can jump
+                if (Input.GetButtonDown("Jump") || (_bufferedJump && _jumpBufferTimer <= _jumpBufferTime)) {
+                    _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+                }
+                //reset timers and flags
+                _bufferedJump = false;
+                _jumpBufferTimer = 0;
+                _coyoteTimer = 0;
             } else {
-                _velocity.y += _gravity * Time.deltaTime;
-            }
-        }
-
-        protected virtual void CalculateVelocity() {}
-
-        protected virtual void Move(Vector2 velocity) {
-            _isGrounded = false;
-            CheckHorizontalCollisions(ref velocity);
-            CheckVerticalCollisions(ref velocity);
-            transform.Translate(velocity);
-        }
-
-        protected virtual void CheckHorizontalCollisions(ref Vector2 velocity) {
-            if(velocity.x == 0) return;
-            Vector2 dirX = Math.Sign(velocity.x) * Vector2.right;
-            Vector2 origin = velocity.x > 0 ? _raycastOrigins.Right : _raycastOrigins.Left;
-            float distance = _skinWidth + Mathf.Abs(velocity.x);
-            for (int i = 0; i < _horizontalRayCount; i++) {
-                RaycastHit2D hit = Physics2D.Raycast(new Vector2(origin.x, origin.y + i * _hRaySpacing), dirX, distance, _collisionMask);
-                //Debug.DrawRay(new Vector2(origin.x, origin.y + i * _hRaySpacing), dirX * distance, Color.red); //Only for debugging
-                if (hit) {
-                    velocity.x = dirX.x < 0 ? _skinWidth - hit.distance : hit.distance - _skinWidth;
-                    distance = hit.distance;
+                //If the player is not grounded, pressing jump within the coyote time will still allow them to jump
+                if (Input.GetButtonDown("Jump") && _coyoteTimer <= _coyoteTime) {
+                    _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+                //If the coyote time has passed, pressing jump will attempt to buffer the jump
+                } else if(Input.GetButtonDown("Jump")) {
+                    _bufferedJump = true;
                 }
+                //increment timers
+                if (_bufferedJump) {
+                    _jumpBufferTimer += Time.deltaTime;
+                }
+                _coyoteTimer += Time.deltaTime;
             }
         }
 
-        protected virtual RaycastHit2D CheckVerticalCollisions(ref Vector2 velocity) {
-            RaycastHit2D finalHit = new RaycastHit2D();
-            int dirY = Math.Sign(velocity.y);
-            Vector2 direction = dirY == 0 ? Vector2.down : dirY * Vector2.up;
-            Vector2 origin = velocity.y > 0 ? _raycastOrigins.Top : _raycastOrigins.Left;
-            float distance = _skinWidth + Mathf.Abs(velocity.y);
-            for (int i = 0; i < _verticalRayCount; i++) {
-                RaycastHit2D hit = Physics2D.Raycast(new Vector2(origin.x + i * _vRaySpacing + velocity.x, origin.y), direction, distance, _collisionMask);
-                //Debug.DrawRay(new Vector2(origin.x + i * _vRaySpacing + velocity.x, origin.y), direction * distance, Color.red); //Only for debugging
-                if (hit) {
-                    velocity.y = dirY <= 0 ? _skinWidth - hit.distance : hit.distance - _skinWidth;
-                    distance = hit.distance;
-                    _isGrounded = dirY <= 0;
-
-                    if(hit.transform.tag.Equals("MovingPlatform")) {
-                        transform.SetParent(hit.transform, true);
-                    } else {
-                        transform.SetParent(null, true);
-                    }
-                    finalHit = hit;
-                }
+        void AddGravity() {
+            if (_rb.velocity.y < 0) {
+                _rb.velocity += Vector2.up * (1.5f * Time.deltaTime * Physics2D.gravity.y);
+            } else if (_rb.velocity.y > 0 && !Input.GetButton("Jump")) {
+                _rb.velocity += Vector2.up * (Time.deltaTime * Physics2D.gravity.y);
             }
-            return finalHit;
+            Vector2 rbVelocity = _rb.velocity;
+            _rb.velocity = new Vector2(rbVelocity.x, Mathf.Clamp(rbVelocity.y, -_jumpForce, _jumpForce));
+        }
+
+        void HurtPlayer(ref Vector2 velocity) {
+            _spriteRenderer.color = new Color(1, 0, 0, 1);
+            transform.localScale = new Vector3(1f, 0.85f, 1);
+            _collider.enabled = false;
+            _rb.velocity = new Vector2(0, 5*_jumpForce);
+            GameManager.Instance.RestartLevel();
+        }
+
+        private void OnCollisionEnter2D(Collision2D col) {
+            if(col.gameObject.CompareTag("Spikes")){
+                HurtPlayer(ref _velocity);
+            } else if(col.gameObject.CompareTag("MovingPlatform")) {
+                transform.parent = col.transform;
+            }
+        }
+
+        private void OnCollisionExit2D(Collision2D col) {
+            if(col.gameObject.CompareTag("MovingPlatform")) {
+                transform.parent = null;
+            }
         }
     }
 }
