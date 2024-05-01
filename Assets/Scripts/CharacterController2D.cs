@@ -13,11 +13,13 @@ namespace bitrush {
         [SerializeField] private float _jumpTime = 0.35f;
         [SerializeField] private float _jumpBufferTime = 0.1f;
         [SerializeField] private float _coyoteTime = 0.1f;
+        [SerializeField] private float _fallTime = 0.2f;
 
         [Header("Player References")]
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private CapsuleCollider2D _collider;
         [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private PlatformEffector2D _platformEffector;
         [SerializeField] private ParticleSystem _dustParticles;
         [SerializeField] private Transform _groundCheck;
         [SerializeField] private LayerMask _groundLayer;
@@ -26,6 +28,7 @@ namespace bitrush {
         private float _jumpForce;
         private float _jumpBufferTimer;
         private float _coyoteTimer;
+        private float _fallTimer;
         private bool _bufferedJump;
         private bool _isGrounded;
         private bool _isUnderwater;
@@ -41,6 +44,7 @@ namespace bitrush {
             AddGravity();
             MovementInput();
             JumpInput();
+            FallInput();
             _isGrounded = Physics2D.OverlapCircle(_groundCheck.position, 0.05f, _groundLayer);
             if(!_isGrounded || _isUnderwater) {
                 _dustParticles.Stop();
@@ -85,6 +89,21 @@ namespace bitrush {
                     _jumpBufferTimer += Time.deltaTime;
                 }
                 _coyoteTimer += Time.deltaTime;
+            }
+        }
+
+        void FallInput() {
+            if(_isHurt) return;
+            if (Input.GetAxisRaw("Vertical") < 0) {
+                _platformEffector.rotationalOffset = 180;
+                _fallTimer = 0;
+            }
+            if (_platformEffector.rotationalOffset != 0) {
+                _fallTimer += Time.deltaTime;
+            }
+            if(_fallTimer >= _fallTime) {
+                _platformEffector.rotationalOffset = 0;
+                _fallTimer = 0;
             }
         }
 
