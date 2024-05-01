@@ -18,6 +18,7 @@ namespace bitrush {
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private CapsuleCollider2D _collider;
         [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private ParticleSystem _dustParticles;
         [SerializeField] private Transform _groundCheck;
         [SerializeField] private LayerMask _groundLayer;
 
@@ -27,6 +28,8 @@ namespace bitrush {
         private float _coyoteTimer;
         private bool _bufferedJump;
         private bool _isGrounded;
+        private bool _isUnderwater;
+        private bool _isHurt;
 
         void Start() {
             Application.targetFrameRate = 60;
@@ -39,10 +42,16 @@ namespace bitrush {
             MovementInput();
             JumpInput();
             _isGrounded = Physics2D.OverlapCircle(_groundCheck.position, 0.05f, _groundLayer);
+            if(!_isGrounded || _isUnderwater) {
+                _dustParticles.Stop();
+            } else if(_dustParticles.isStopped && (_isGrounded||!_isUnderwater)) {
+                _dustParticles.Play();
+            }
             _rb.velocity = new Vector2(_velocity.x, _rb.velocity.y);
         }
 
         void MovementInput() {
+            if (_isHurt) return;
             _velocity.x = Input.GetAxisRaw("Horizontal") * _movementSpeed;
 
             if (_velocity.x < 0) {
@@ -53,7 +62,8 @@ namespace bitrush {
         }
 
         void JumpInput() {
-            if (_isGrounded) {
+            if(_isHurt) return;
+            if (_isGrounded || _isUnderwater) {
                 //If the player is grounded or buffered a jump previously, they can jump
                 if (Input.GetButtonDown("Jump") || (_bufferedJump && _jumpBufferTimer <= _jumpBufferTime)) {
                     _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
@@ -89,6 +99,7 @@ namespace bitrush {
         }
 
         void HurtPlayer(ref Vector2 velocity) {
+            _isHurt = true;
             _spriteRenderer.color = new Color(1, 0, 0, 1);
             transform.localScale = new Vector3(1f, 0.85f, 1);
             _collider.enabled = false;
@@ -107,6 +118,18 @@ namespace bitrush {
         private void OnCollisionExit2D(Collision2D col) {
             if(col.gameObject.CompareTag("MovingPlatform")) {
                 transform.parent = null;
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D col) {
+            if(col.gameObject.CompareTag("Water")) {
+                _isUnderwater = true;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D col) {
+            if(col.gameObject.CompareTag("Water")) {
+                _isUnderwater = false;
             }
         }
     }
