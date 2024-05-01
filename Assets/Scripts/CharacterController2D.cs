@@ -117,19 +117,21 @@ namespace bitrush {
             _rb.velocity = new Vector2(rbVelocity.x, Mathf.Clamp(rbVelocity.y, -_jumpForce, _jumpForce));
         }
 
-        void HurtPlayer(ref Vector2 velocity) {
+        void HurtPlayer() {
             _isHurt = true;
             _spriteRenderer.color = new Color(1, 0, 0, 1);
             transform.localScale = new Vector3(1f, 0.85f, 1);
             _collider.enabled = false;
+            _velocity.x = 0;
             _rb.velocity = new Vector2(0, 5*_jumpForce);
             GameManager.Instance.RestartLevel();
         }
 
         private void OnCollisionEnter2D(Collision2D col) {
             if(col.gameObject.CompareTag("Spikes")){
-                HurtPlayer(ref _velocity);
-            } else if(col.gameObject.CompareTag("MovingPlatform")) {
+                HurtPlayer();
+            }
+            if(col.gameObject.CompareTag("MovingPlatform")) {
                 transform.parent = col.transform;
             }
         }
