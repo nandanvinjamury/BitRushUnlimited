@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -20,11 +20,11 @@ namespace bitrush {
                 Destroy(this);
             }
             _cts = new CancellationTokenSource();
-            Move(_cts.Token);
+            Move(_cts.Token).Forget();
         }
 
-        private async void Move(CancellationToken token) {
-            await Task.Delay(_moveDelay);
+        private async UniTaskVoid Move(CancellationToken token) {
+            await UniTask.Delay(_moveDelay);
             int index = 0;
             while (!token.IsCancellationRequested) {
                 transform.position = Vector3.MoveTowards(transform.position, _waypoints[index], _moveSpeed * Time.deltaTime);
@@ -41,9 +41,9 @@ namespace bitrush {
                             index += _nonCycleIterator;
                         }
                     }
-                    await Task.Delay(_moveDelay);
+                    await UniTask.Delay(_moveDelay);
                 } else {
-                    await Task.Yield();
+                    await UniTask.Yield();
                 }
             }
         }
