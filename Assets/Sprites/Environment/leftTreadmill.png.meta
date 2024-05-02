@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e3867d896c7c7e343a88044fbc4dd302
+guid: 65997050ac874a3468bdb07c233d03cc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: treadmillRight-Sheet_0
+      name: leftTreadmill_0
       rect:
         serializedVersion: 2
         x: 0
@@ -150,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 684d6501755a0794b87dc6c842f2ba78
-      internalID: -1001151406
+      spriteID: 629fccee4c67dee4daf8fa32276cf7c8
+      internalID: -36690767
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_1
+      name: leftTreadmill_1
       rect:
         serializedVersion: 2
         x: 32
@@ -171,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ecaf5fbf26c5cc24da1411d403d3be4e
-      internalID: -414472667
+      spriteID: a778f2fbd6d47d6419346cfb614e8a72
+      internalID: 1765622732
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_2
+      name: leftTreadmill_2
       rect:
         serializedVersion: 2
         x: 64
@@ -192,14 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51220b12f5eeb9c4ba36933ba09b085a
-      internalID: 1465937843
+      spriteID: bc1b4f3e1aac1aa499fc67a77245eb73
+      internalID: 904767332
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_3
+      name: leftTreadmill_3
       rect:
         serializedVersion: 2
         x: 96
@@ -213,14 +213,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73ac19d23b00c154a9ba426b1b8d7f31
-      internalID: -758981717
+      spriteID: 00f6bc9cbc1bdee4f80890687354605f
+      internalID: 1025929847
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_4
+      name: leftTreadmill_4
       rect:
         serializedVersion: 2
         x: 128
@@ -234,14 +234,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff4c673b7f5ccba42a62b1ba6aa41b3d
-      internalID: -25358152
+      spriteID: a7daed15d154bbb4781f20484ad7b4b5
+      internalID: 1420401840
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_5
+      name: leftTreadmill_5
       rect:
         serializedVersion: 2
         x: 160
@@ -255,14 +255,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4f326ff9d12cc54094dc1abe9551dbc
-      internalID: 1530780200
+      spriteID: bae10c7636bc59044bba8f76a96888e9
+      internalID: 157646290
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_6
+      name: leftTreadmill_6
       rect:
         serializedVersion: 2
         x: 192
@@ -276,14 +276,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0db48e485b8729649825fc0a7d32a25a
-      internalID: -1160269793
+      spriteID: 3fdb04d2bcd42de4ca3d490cdecbf4d6
+      internalID: -1374068435
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_7
+      name: leftTreadmill_7
       rect:
         serializedVersion: 2
         x: 224
@@ -297,14 +297,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed70f948c4ebb044fac3b91ad32745e7
-      internalID: 353995764
+      spriteID: aec2587833ed0f64b890b6cd6cb839e2
+      internalID: -1162005928
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_8
+      name: leftTreadmill_8
       rect:
         serializedVersion: 2
         x: 256
@@ -318,14 +318,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24803f16f7e6ff74d845dd3e26a3750d
-      internalID: -1884443490
+      spriteID: 023817d730a6d4648ae5c98eeb74a424
+      internalID: 1422713757
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_9
+      name: leftTreadmill_9
       rect:
         serializedVersion: 2
         x: 288
@@ -339,14 +339,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77b7a17a20a23424e94135df56425a91
-      internalID: 1851069706
+      spriteID: c1b311288d593f946b025af20b972f08
+      internalID: 446545370
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_10
+      name: leftTreadmill_10
       rect:
         serializedVersion: 2
         x: 320
@@ -360,14 +360,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0698e48f5ec45442b42854eea051214
-      internalID: 1714645759
+      spriteID: d8f41103bb6461245b1029d64514f4ff
+      internalID: 1759613703
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_11
+      name: leftTreadmill_11
       rect:
         serializedVersion: 2
         x: 352
@@ -381,14 +381,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b47fd24990f54f41aee79a67cba1705
-      internalID: 476119506
+      spriteID: 41bcfdf3e18aa3d46966f3a4fbe5fef9
+      internalID: 1304748363
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_12
+      name: leftTreadmill_12
       rect:
         serializedVersion: 2
         x: 384
@@ -402,14 +402,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e61a22bf4b8b75b478dc269f4ed825ed
-      internalID: 1834302845
+      spriteID: b21834059e7f655439596e0ac770cea9
+      internalID: 272486021
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_13
+      name: leftTreadmill_13
       rect:
         serializedVersion: 2
         x: 416
@@ -423,14 +423,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 53450cc39ae0f3e48a8efebf2c791ef3
-      internalID: 1366814738
+      spriteID: 498346a403230de46a7793d188aae72b
+      internalID: -1528842222
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_14
+      name: leftTreadmill_14
       rect:
         serializedVersion: 2
         x: 448
@@ -444,14 +444,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 361d2b8e1d1d5d448874ae8fbe3e7af6
-      internalID: 1715127605
+      spriteID: 0ece574b288b481458031f658240632a
+      internalID: -1497068453
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_15
+      name: leftTreadmill_15
       rect:
         serializedVersion: 2
         x: 480
@@ -465,14 +465,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fdd0549636cee95409f0a119727a0ac8
-      internalID: 450563783
+      spriteID: 19d4d1ea85d74ac4d9d7f27f77744f76
+      internalID: -1422532773
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_16
+      name: leftTreadmill_16
       rect:
         serializedVersion: 2
         x: 512
@@ -486,14 +486,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 401340941f35743408420750402febb5
-      internalID: 307908745
+      spriteID: 18aa62f13286b2740a390bf19a8dbab0
+      internalID: 1405034455
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_17
+      name: leftTreadmill_17
       rect:
         serializedVersion: 2
         x: 544
@@ -507,14 +507,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a729657a21f223448df6e9d2c9f89ed
-      internalID: 2018460038
+      spriteID: 260f2d8cdb4ad5943ab5b3204a10045c
+      internalID: -1571949828
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_18
+      name: leftTreadmill_18
       rect:
         serializedVersion: 2
         x: 576
@@ -528,14 +528,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1f54136fd996c7439d0274eb0cac7ab
-      internalID: 636654399
+      spriteID: 08094c63dc15dfe45be74149f91e84ea
+      internalID: 659730611
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_19
+      name: leftTreadmill_19
       rect:
         serializedVersion: 2
         x: 608
@@ -549,14 +549,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79ad547f058d0584295cc23f84028ea0
-      internalID: -407498623
+      spriteID: 6f2247580111df14da12a81d0df099db
+      internalID: 460476335
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_20
+      name: leftTreadmill_20
       rect:
         serializedVersion: 2
         x: 640
@@ -570,14 +570,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73ca3f81758c8a7498e099dfd4081ac5
-      internalID: 1192659308
+      spriteID: c510163909b71ae478d7c990eb8b90e7
+      internalID: -1098469583
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_21
+      name: leftTreadmill_21
       rect:
         serializedVersion: 2
         x: 672
@@ -591,14 +591,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f7060573e422b74682e1b27d72a4ce7
-      internalID: -287248188
+      spriteID: 947defc93dd676e41bade5712a4b0885
+      internalID: -640672847
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_22
+      name: leftTreadmill_22
       rect:
         serializedVersion: 2
         x: 704
@@ -612,14 +612,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e2d203c8f5ba3eb4481e0ae9af8db81d
-      internalID: 1756160199
+      spriteID: e4913503ac30fe14b8a799608337d4c3
+      internalID: 138118499
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: treadmillRight-Sheet_23
+      name: leftTreadmill_23
       rect:
         serializedVersion: 2
         x: 736
@@ -633,8 +633,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd6f2f3837a405c4f85774636b0ca2f0
-      internalID: 203380705
+      spriteID: 4e2002addb6a1cd47b56deb6657e0ab3
+      internalID: 988105452
       vertices: []
       indices: 
       edges: []
@@ -650,30 +650,30 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      treadmillRight-Sheet_0: -1001151406
-      treadmillRight-Sheet_1: -414472667
-      treadmillRight-Sheet_10: 1714645759
-      treadmillRight-Sheet_11: 476119506
-      treadmillRight-Sheet_12: 1834302845
-      treadmillRight-Sheet_13: 1366814738
-      treadmillRight-Sheet_14: 1715127605
-      treadmillRight-Sheet_15: 450563783
-      treadmillRight-Sheet_16: 307908745
-      treadmillRight-Sheet_17: 2018460038
-      treadmillRight-Sheet_18: 636654399
-      treadmillRight-Sheet_19: -407498623
-      treadmillRight-Sheet_2: 1465937843
-      treadmillRight-Sheet_20: 1192659308
-      treadmillRight-Sheet_21: -287248188
-      treadmillRight-Sheet_22: 1756160199
-      treadmillRight-Sheet_23: 203380705
-      treadmillRight-Sheet_3: -758981717
-      treadmillRight-Sheet_4: -25358152
-      treadmillRight-Sheet_5: 1530780200
-      treadmillRight-Sheet_6: -1160269793
-      treadmillRight-Sheet_7: 353995764
-      treadmillRight-Sheet_8: -1884443490
-      treadmillRight-Sheet_9: 1851069706
+      leftTreadmill_0: -36690767
+      leftTreadmill_1: 1765622732
+      leftTreadmill_10: 1759613703
+      leftTreadmill_11: 1304748363
+      leftTreadmill_12: 272486021
+      leftTreadmill_13: -1528842222
+      leftTreadmill_14: -1497068453
+      leftTreadmill_15: -1422532773
+      leftTreadmill_16: 1405034455
+      leftTreadmill_17: -1571949828
+      leftTreadmill_18: 659730611
+      leftTreadmill_19: 460476335
+      leftTreadmill_2: 904767332
+      leftTreadmill_20: -1098469583
+      leftTreadmill_21: -640672847
+      leftTreadmill_22: 138118499
+      leftTreadmill_23: 988105452
+      leftTreadmill_3: 1025929847
+      leftTreadmill_4: 1420401840
+      leftTreadmill_5: 157646290
+      leftTreadmill_6: -1374068435
+      leftTreadmill_7: -1162005928
+      leftTreadmill_8: 1422713757
+      leftTreadmill_9: 446545370
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

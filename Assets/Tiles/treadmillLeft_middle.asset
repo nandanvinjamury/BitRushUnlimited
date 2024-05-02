@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: treadmillLeft_middle
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: -290237796, guid: 6e46280846bf65744ae4d1d8707f3dcc, type: 3}
-  - {fileID: 663798169, guid: 6e46280846bf65744ae4d1d8707f3dcc, type: 3}
-  - {fileID: -1640991467, guid: 6e46280846bf65744ae4d1d8707f3dcc, type: 3}
-  - {fileID: -239839671, guid: 6e46280846bf65744ae4d1d8707f3dcc, type: 3}
-  - {fileID: -1570178126, guid: 6e46280846bf65744ae4d1d8707f3dcc, type: 3}
-  - {fileID: -1118466562, guid: 6e46280846bf65744ae4d1d8707f3dcc, type: 3}
-  - {fileID: 426016923, guid: 6e46280846bf65744ae4d1d8707f3dcc, type: 3}
-  - {fileID: -1722503610, guid: 6e46280846bf65744ae4d1d8707f3dcc, type: 3}
+  - {fileID: 1765622732, guid: 65997050ac874a3468bdb07c233d03cc, type: 3}
+  - {fileID: 1420401840, guid: 65997050ac874a3468bdb07c233d03cc, type: 3}
+  - {fileID: -1162005928, guid: 65997050ac874a3468bdb07c233d03cc, type: 3}
+  - {fileID: 1759613703, guid: 65997050ac874a3468bdb07c233d03cc, type: 3}
+  - {fileID: -1528842222, guid: 65997050ac874a3468bdb07c233d03cc, type: 3}
+  - {fileID: 1405034455, guid: 65997050ac874a3468bdb07c233d03cc, type: 3}
+  - {fileID: 460476335, guid: 65997050ac874a3468bdb07c233d03cc, type: 3}
+  - {fileID: 138118499, guid: 65997050ac874a3468bdb07c233d03cc, type: 3}
   m_MinSpeed: 30
   m_MaxSpeed: 30
   m_AnimationStartTime: 0
