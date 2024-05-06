@@ -203,6 +203,10 @@ namespace bitrush {
             if(col.gameObject.CompareTag("MovingPlatform")) {
                 transform.parent = col.transform;
             }
+
+            if (col.gameObject.CompareTag("Destroy")) {
+                col.gameObject.SetActive(false);
+            }
         }
 
         private void OnCollisionExit2D(Collision2D col) {

@@ -11,6 +11,7 @@ TagManager:
   - Glider
   - Swap
   - BlackHole
+  - Destroy
   layers:
   - Default
   - TransparentFX
